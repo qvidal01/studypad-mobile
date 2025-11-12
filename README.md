@@ -92,25 +92,13 @@ flutter pub get
 
 Create a configuration file for the backend API:
 
-**lib/config/api_config.dart:**
-```dart
-class ApiConfig {
-  // Development - your homelab
-  static const String devBaseUrl = 'http://192.168.1.x:8000';
+The API configuration is already set up in `lib/config/api_config.dart` with automatic platform detection:
 
-  // Production - when deployed
-  static const String prodBaseUrl = 'https://api.studypad.yourdomain.com';
+- **Android Emulator**: Uses `http://10.0.2.2:8011` to access host machine's localhost
+- **iOS Simulator**: Uses `http://localhost:8011`
+- **Production**: Set `isProduction = true` in the config file
 
-  // Current environment
-  static const String baseUrl = devBaseUrl;
-
-  // API endpoints
-  static const String uploadEndpoint = '/api/v1/upload';
-  static const String documentsEndpoint = '/api/v1/documents';
-  static const String queryEndpoint = '/api/v1/query';
-  static const String studioEndpoint = '/api/v1/studio';
-}
-```
+To change the backend URL for your environment, edit the constants in `lib/config/api_config.dart`.
 
 ### 5. Run the App
 
@@ -308,19 +296,13 @@ flutter run
 
 ### Network Issues (Cannot Connect to Backend)
 
-For Android emulator to connect to localhost:
-```dart
-// Use 10.0.2.2 instead of localhost or 127.0.0.1
-static const String devBaseUrl = 'http://10.0.2.2:8000';
-```
+The API configuration in `lib/config/api_config.dart` automatically handles platform-specific URLs:
 
-For iOS simulator:
-```dart
-// Use localhost or your Mac's local IP
-static const String devBaseUrl = 'http://localhost:8000';
-// or
-static const String devBaseUrl = 'http://192.168.1.x:8000';
-```
+- **Android emulator**: Automatically uses `http://10.0.2.2:8011`
+- **iOS simulator**: Automatically uses `http://localhost:8011`
+- **Physical devices**: Update the `_devBaseUrlOther` constant to your machine's local IP (e.g., `http://192.168.1.x:8011`)
+
+If you need to change the backend port, edit the URL constants in `lib/config/api_config.dart`.
 
 ## Contributing
 
@@ -343,8 +325,10 @@ We welcome contributions! To contribute:
 ## Roadmap
 
 ### Phase 1: Basic Functionality (Current)
-- [ ] Set up Flutter project structure
-- [ ] Implement API client
+- [x] Set up Flutter project structure
+- [x] Implement API client
+- [x] Create data models (Document, Message)
+- [x] Set up app navigation and UI structure
 - [ ] Create document upload screen
 - [ ] Build chat interface
 
